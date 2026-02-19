@@ -20,10 +20,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t qdochubimage:24f1002702 .
+        run: docker build -t qdochubimage:24f1002702 -t qdochubimage:latest .
 
       - name: Tag Docker image
-        run: docker tag qdochubimage:24f1002702 ${{ secrets.DOCKERHUB_USERNAME }}/qdochubimage:24f1002702
+        run: |
+          docker tag qdochubimage:24f1002702 ${{ secrets.DOCKERHUB_USERNAME }}/qdochubimage:24f1002702
+          docker tag qdochubimage:latest ${{ secrets.DOCKERHUB_USERNAME }}/qdochubimage:latest
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/qdochubimage:24f1002702
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/qdochubimage:24f1002702
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/qdochubimage:latest
